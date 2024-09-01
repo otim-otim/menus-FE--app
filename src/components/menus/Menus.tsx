@@ -9,7 +9,11 @@ import {
     useSetRecoilState
 } from 'recoil'
 
+import { fetchMenus, fetchMenuList } from '../../services/Menus.service'
+
 export default function Menus() {
+
+    fetchMenus()
   const menus = useRecoilValue(menusState)
 
   const setMenuItem = useSetRecoilState(menusState)
