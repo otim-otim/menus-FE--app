@@ -65,3 +65,35 @@
   }
 }
 
+.nested-list ul {
+  border-left: 1px solid black; /* Thin solid border on the left */
+  padding-left: 1.5rem; /* Space for the border */
+  position: relative;
+}
+
+.nested-list ul::before {
+  content: "";
+  position: absolute;
+  left: -1px; /* Same as border width */
+  top: 0;
+  bottom: 0;
+  width: 1px; /* Thin solid line connecting */
+  background: black;
+}
+
+.nested-list li {
+  position: relative;
+  padding-left: 0rem; /* Space between border line and text */
+}
+
+.nested-list li::before {
+  content: "";
+  position: absolute;
+  left: -1rem; /* Distance from the text */
+  top: 50%;
+  height: 1px; /* Thin solid line */
+  width: 1rem; /* Adjust to fit with the li text */
+  background: black;
+  transform: translateY(-50%);
+}
+
