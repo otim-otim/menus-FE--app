@@ -6,8 +6,9 @@ export const menusState = atom({
   default: [] as Menu[], // default value is an array of Menu objects with initial values
 });
 
+// Define selectedParentMenuState
 export const selectedParentMenuState = atom({
-  key: 'selectedParentMenuState', // unique ID (with respect to other atoms/selectors)
+  key: 'selectedParentMenuState',
   default: selector({
     key: 'defaultSelectedParentMenu',
     get: ({ get }) => {
@@ -17,14 +18,32 @@ export const selectedParentMenuState = atom({
   }),
 });
 
+// Define selectedMenuState
 export const selectedMenuState = atom({
-  key: 'selectedMenuState', // unique ID (with respect to other atoms/selectors)
+  key: 'selectedMenuState',
   default: selector({
     key: 'defaultSelectedMenu',
     get: ({ get }) => {
-      return get(selectedParentMenuState);
+      return get(selectedParentMenuState); // Initial default value is tied to selectedParentMenuState
     },
   }),
+});
+
+// Define a selector to synchronize selectedMenuState with selectedParentMenuState
+export const synchronizedMenuState = selector({
+  key: 'synchronizedMenuState',
+  get: ({ get }) => {
+    return get(selectedMenuState); // Get the current selectedMenuState
+  },
+  set: ({ get, set }) => {
+    const selectedParentMenu = get(selectedParentMenuState);
+    const currentSelectedMenu = get(selectedMenuState);
+
+    // If selectedParentMenu changes, update selectedMenuState
+    if (currentSelectedMenu !== selectedParentMenu) {
+      set(selectedMenuState, selectedParentMenu);
+    }
+  },
 });
 
 export const menuFetchingState = atom({
