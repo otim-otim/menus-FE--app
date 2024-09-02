@@ -31,6 +31,10 @@ export const menuFetchingState = atom({
   key: 'menuFetchingState', // unique ID (with respect to other atoms/selectors)
   default: null as null | 'pending' | 'error' | 'success', // default value (aka initial value)
 });
+export const menuStoringState = atom({
+  key: 'menuStoringState', // unique ID (with respect to other atoms/selectors)
+  default: null as null | 'pending' | 'error' | 'success', // default value (aka initial value)
+});
 
 export const parentMenuState = selector({
   key: 'parentMenuState',
