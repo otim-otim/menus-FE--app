@@ -1,5 +1,5 @@
 
-import './App.css'
+// import './App.css'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import {
   useQuery,
