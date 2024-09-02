@@ -19,8 +19,9 @@ import { Input } from "@/components/ui/input"
 
 
 const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+    parentId: z.string().nullable(),
+    menuName: z.string().min(2, {
+      message: "Menu name must be at least 2 characters.",
     }),
   })
 
@@ -32,7 +33,8 @@ export default function CreateMenu({ context = 'child' }: { context?: 'child' | 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-          username: "",
+            menuName: selectedMenu?.name || '',
+            parentId: selectedParentMenu?.id || '',
         },
       })
      
@@ -48,21 +50,48 @@ export default function CreateMenu({ context = 'child' }: { context?: 'child' | 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="username"
+            name="ParentId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+                  <Input type='hidden' {...field} />
+                </FormControl>                
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <FormItem>
+          <FormLabel>Menu ID</FormLabel>
+          <FormControl>
+            <Input value={selectedMenu?.id || ''} readOnly />
+          </FormControl>
+        </FormItem>
+          <FormItem>
+          <FormLabel>Depth</FormLabel>
+          <FormControl>
+            <Input value={selectedMenu?.depth || ''} readOnly />
+          </FormControl>
+        </FormItem>
+          <FormItem>
+          <FormLabel>Parent Data</FormLabel>
+          <FormControl>
+            <Input value={selectedParentMenu?.name || ''} readOnly />
+          </FormControl>
+        </FormItem>
+          <FormField
+            control={form.control}
+            name="menuName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>name</FormLabel>
+                <FormControl>
+                  <Input placeholder="menu name" {...field} />
+                </FormControl>                
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button className='w-full bg-purple-500 border rounded-lg' type="submit" >Save</Button>
         </form>
       </Form>
     )
