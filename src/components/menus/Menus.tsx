@@ -2,21 +2,17 @@ import React, { useState } from 'react'
 import { Menu } from '../../Types'
 import { menusState } from '../../store'
 import {
-    atom, 
-    selector, 
     useRecoilValue, 
-    useRecoilState,
-    useSetRecoilState
 } from 'recoil'
 
-import { fetchMenus, fetchMenuList } from '../../services/Menus.service'
+import { fetchMenus } from '../../services/Menus.service'
 
 export default function Menus() {
 
     fetchMenus()
-  const menus = useRecoilValue(menusState)
+  const menusItems = useRecoilValue(menusState)
 
-  const setMenuItem = useSetRecoilState(menusState)
+//   const setMenuItem = useSetRecoilState(menusState)
 
   const renderMenu = (menu: Menu) => {
     return (
@@ -35,7 +31,7 @@ export default function Menus() {
 
   return (
     <div className="w-310 h-710 top-368 left-312 gap-0 border-t border-blue-gray-400 opacity-1">
-      {menus.map((menu) => (
+      {menusItems.map((menu) => (
         <div key={menu.id}>{renderMenu(menu)}</div>
       ))}
     </div>
