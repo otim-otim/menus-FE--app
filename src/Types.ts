@@ -1,6 +1,6 @@
 
 export interface Menu {
-    id?: number,
+    id: string,
     name: string
     depth: number,
     parent?: number | null
