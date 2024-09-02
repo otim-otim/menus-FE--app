@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import axiosInstance from '../axiosInstance'
 import {
     
+    useRecoilValue,
     useSetRecoilState
 } from 'recoil'
-import { menusState , menuFetchingState} from '../store'
+import { menusState , menuFetchingState, menuStoringState} from '../store'
 
 export function fetchMenus(){
     try {
@@ -18,22 +19,64 @@ export function fetchMenus(){
           setMenuFetchState(status)
           if(status === 'success') 
             setMenusState(data?.data)
-
-
-        //   console.log(result)
-
-        // fetchMenuList()
     } catch (error) {
         
     }
 }
 
-export async function fetchMenuList() {
+async function fetchMenuList() {
 try {
     const response= await axiosInstance.get('/menus')
-    console.log('response',response)
     return response
 } catch (error) {
     
 }
+}
+
+async function storeMenu(menuData : { name: string, parentId?: string }){
+    try {
+        const response= await axiosInstance.post('/menus', menuData)
+        return response
+    } catch (error) {
+        
+    }
+}
+
+export function storeNewMenu(){
+    try {
+        const menus = useRecoilValue(menusState)
+        const setMenusState = useSetRecoilState(menusState)
+        const setMenuStoringState = useSetRecoilState(menuStoringState)
+        const {data, status, error} = useQuery({
+            queryKey: ['store-menu'],
+            queryFn: storeMenu,
+          })
+
+          setMenuStoringState(status)
+                    
+          if(status === 'success') {
+            const menu = data?.data
+            if (menu.parent){
+                const parent = menus.find( menu => menu.id ==  menu.parent)
+                if(parent){
+                    parent.children = [...parent?.children,menu]
+                    const updatedMenu  = menus.map(menu => {
+                        if(menu.id == parent.id)
+                            return parent
+                        return menu
+                    })
+                    setMenusState(updatedMenu)
+
+                }
+                
+            }
+            else 
+              setMenusState([...menus,menu])
+          }
+
+
+    } catch (error) {
+        
+    }
+
 }
