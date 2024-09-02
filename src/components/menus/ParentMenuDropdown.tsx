@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useRecoilState, useRecoilValue , useSetRecoilState} from 'recoil'
-import { selectedParentMenuState, menusState } from '../../store'
+import { selectedParentMenuState, parentMenuState } from '../../store'
 
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ export default function ParentMenuDropdown() {
   const [position, setPosition] = React.useState("bottom")
 
     const [selectedParentMenu, setSelectedParentMenu] = useRecoilState(selectedParentMenuState);
-    const menus = useRecoilValue(menusState);
+    const menus = useRecoilValue(parentMenuState);
 
     const handleItemClick = (menuId: string) => {
       const menu: Menu | undefined = menus.find((menu: Menu) => menu.id === menuId);
