@@ -21,6 +21,7 @@ import Menus from './components/menus/Menus';
 import SideBar from './components/SideBar';
 import Header from './components/Header';
 import PageTitle from './components/PageTitle';
+import ParentMenuDropdown from './components/menus/ParentMenuDropdown'
 
 // Create a client
 const queryClient = new QueryClient()
@@ -39,6 +40,7 @@ function App() {
   <main className="p-4 ml-[260px] bg-green">
   <Header />
   <PageTitle />
+  <ParentMenuDropdown />
     <Menus />
   </main>
 </div>
