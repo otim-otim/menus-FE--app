@@ -22,6 +22,7 @@ import SideBar from './components/SideBar';
 import Header from './components/Header';
 import PageTitle from './components/PageTitle';
 import ParentMenuDropdown from './components/menus/ParentMenuDropdown'
+import MenuPage from './pages/MenuPage';
 
 // Create a client
 const queryClient = new QueryClient()
@@ -38,10 +39,7 @@ function App() {
       <div className=" bg-white">
   <SideBar />
   <main className="p-4 ml-[260px] bg-green">
-  <Header />
-  <PageTitle />
-  <ParentMenuDropdown />
-    <Menus />
+    <MenuPage />
   </main>
 </div>
      </RecoilRoot> 
