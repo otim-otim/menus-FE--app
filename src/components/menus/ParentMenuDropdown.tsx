@@ -21,6 +21,7 @@ export default function ParentMenuDropdown() {
 
     const handleItemClick = (menuId: string) => {
       const menu: Menu | undefined = menus.find((menu: Menu) => menu.id === menuId);
+      if(!menu) return
       setSelectedParentMenu(menu);
     };
 
