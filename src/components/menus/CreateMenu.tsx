@@ -46,8 +46,18 @@ export default function CreateMenu({ context = 'child' }: { context?: 'child' | 
       }
 
     return (
-        <Form {...form}>
+        <Form {...form}  >
+            <div className="w-3/4 pl-20">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormItem>
+          <FormLabel>Menu ID</FormLabel>
+          <FormControl>
+            <Input value={selectedMenu?.id || ''} readOnly  />
+          </FormControl>
+        </FormItem>
+        
+
+       
           <FormField
             control={form.control}
             name="ParentId"
@@ -60,12 +70,7 @@ export default function CreateMenu({ context = 'child' }: { context?: 'child' | 
               </FormItem>
             )}
           />
-          <FormItem>
-          <FormLabel>Menu ID</FormLabel>
-          <FormControl>
-            <Input value={selectedMenu?.id || ''} readOnly />
-          </FormControl>
-        </FormItem>
+          
           <FormItem>
           <FormLabel>Depth</FormLabel>
           <FormControl>
@@ -91,8 +96,9 @@ export default function CreateMenu({ context = 'child' }: { context?: 'child' | 
               </FormItem>
             )}
           />
-          <Button className='w-full bg-purple-500 border rounded-lg' type="submit" >Save</Button>
+          <Button className='w-full bg-blue-600 border rounded-lg mt-4' type="submit" >Save</Button>
         </form>
+          </div>
       </Form>
     )
 
