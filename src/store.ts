@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
 import { Menu } from './Types';
+import AddMenuButton from './components/menus/AddMenuButton';
 
 export const menusState = atom({
   key: 'menusState', // unique ID (with respect to other atoms/selectors)
@@ -62,4 +63,9 @@ export const parentMenuState = selector({
 
     return menus.filter((menu) => menu.parent === null);
   },
+});
+
+export const addMenuButtonState = atom({
+  key: 'addMenuButtonState',
+  default: false as boolean ,
 });
