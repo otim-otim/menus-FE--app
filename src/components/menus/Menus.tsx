@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Menu } from '../../Types'
-import { selectedParentMenuState } from '../../store'
+import { selectedParentMenuState, selectedMenuState } from '../../store'
 import {
     useRecoilValue, 
+    useSetRecoilState
 } from 'recoil'
 
 import { fetchMenus } from '../../services/Menus.service'
+import AddMenuButton from './AddMenuButton'
 
 export default function Menus() {
 
@@ -15,15 +17,25 @@ export default function Menus() {
   const children = menu? menu.children : []
   // const [selectedParentMenu, setSelectedParentMenu] = useRecoilState(selectedParentMenuState);
 
-//   const setMenuItem = useSetRecoilState(menusState)
+  const setSelectedMenu = useSetRecoilState(selectedMenuState)
+
+  const selectMenuItem = (menu: Menu) => {
+    setSelectedMenu(menu)
+  }
 
   const renderChildMenu = (menu: Menu) => {
     const children = menu.children
-    if(children.length === 0) return <li className="py-2 relative">{menu.name}</li>
+    if(children.length === 0) 
+      return (
+          <li className="py-2 relative" key={menu.id} onClick={() =>selectMenuItem(menu)}>
+            {menu.name}
+            <AddMenuButton menu={menu} />
+            </li>)
     return (
-      <li className="py-2 relative">{menu.name}
+      <li className="py-2 relative" key={menu.id} onClick={() =>selectMenuItem(menu)}>{menu.name}
       <ul className="list-none p-0 m-0">
         {menu.name}
+        <AddMenuButton menu={menu} />
         {children.map((menu) => (
           renderChildMenu(menu)
           
@@ -36,10 +48,13 @@ export default function Menus() {
     )
   }
 
+  if(menu === null) return null
+
   return (
     
 
 <ul className="nested-list list-none p-0 m-0">{menu?.name}
+  <AddMenuButton menu={menu} />
 {children.map((menu) => renderChildMenu(menu))}
 
 </ul>
